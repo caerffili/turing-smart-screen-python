@@ -38,7 +38,7 @@ MENU:
         SUBMENU: MiddleMenu
       TEXT:
         SHOW: True
-        X: 200
+        X: 204
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
         FONT_SIZE: 23
@@ -80,7 +80,7 @@ MENU:
         SUBMENU: ROOT
       TEXT:
         SHOW: True
-        X: 200
+        X: 204
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
         FONT_SIZE: 23
@@ -126,7 +126,7 @@ MENU:
         SUBMENU: ROOT
       TEXT:
         SHOW: True
-        X: 200
+        X: 204
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
         FONT_SIZE: 23

@@ -35,7 +35,7 @@ class ButtonHandler:
                 while True:
                     # Wait for the next event.
                     event = keyboard.read_event()
-                    if event.event_type == keyboard.KEY_DOWN:
+                    if event.event_type == keyboard.KEY_DOWN and keyboard.is_pressed('ctrl') and keyboard.is_pressed('alt'):
                         if event.name >= '1' and event.name <= '9':
                             if 'B' + event.name in menu_data:
                                 
