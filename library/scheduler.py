@@ -26,6 +26,7 @@ from functools import wraps
 
 import library.config as config
 import library.stats as stats
+import library.buttonhandler as buttonhandler
 
 STOPPING = False
 
@@ -176,6 +177,12 @@ def QueueHandler():
         f, args = config.update_queue.get()
         if f:
             f(*args)
+
+
+@async_job("Button_Handler")
+def ButtonHandler():
+    e = buttonhandler.ButtonHandler()
+    e.go()
 
 
 def is_queue_empty() -> bool:
