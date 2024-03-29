@@ -107,6 +107,7 @@ MENU:
     B1:
       MENULABEL: "   ON    "
       ACTION: 
+        BRIGHTNESS_DECREASE: 
         MQTT:
           - TOPIC: "zigbee2mqtt/Living Room STYRBAR/action"
             PAYLOAD: "on" 
@@ -133,7 +134,8 @@ MENU:
         BACKGROUND_IMAGE: background.png
     B3:
       MENULABEL: "   OFF   "
-      ACTION:       
+      ACTION:   
+        BRIGHTNESS_INCREASE:     
         MQTT:
           - TOPIC: "zigbee2mqtt/Living Room STYRBAR/action"
             PAYLOAD: "off" 
@@ -427,3 +429,4 @@ STATS:
           FONT_COLOR: 255, 255, 255
           # BACKGROUND_COLOR: 132, 154, 165
           BACKGROUND_IMAGE: background.png
+ 

@@ -44,35 +44,8 @@ class ButtonHandler:
 
                                     for actiontype, actiondefs in actions.items():
 
-                                        if actiontype != "SUBMENU":
-                                            for actiondef in actiondefs:
+                                        if actiontype == "SUBMENU" or actiontype == "BRIGHTNESS_DECREASE" or actiontype == "BRIGHTNESS_INCREASE":
 
-                                                if actiontype == "MQTT":
-                                                    print("MQTT Publish " + actiondef['TOPIC'] + " - " +actiondef['PAYLOAD'])
-                                                    client.publish(actiondef['TOPIC'], actiondef['PAYLOAD'])
-
-                                                if actiontype =="SHOW_ELEMENT":
-                                                    elementrefs = actiondef['ELEMENT'].split(',')
-                                                    print("Showing Element " + " / ".join(elementrefs))
-                                                    if len(elementrefs) == 4:
-                                                        theme_data = config.THEME_DATA[elementrefs[0]][elementrefs[1]][elementrefs[2]][elementrefs[3]]
-                                                    if len(elementrefs) == 5:
-                                                        theme_data = config.THEME_DATA[elementrefs[0]][elementrefs[1]][elementrefs[2]][elementrefs[3]][elementrefs[4]]
-                                                    theme_data['SHOW'] = True                          
-                                
-                                                if actiontype =="HIDE_ELEMENT":
-                                                    elementrefs = actiondef['ELEMENT'].split(',')
-                                                    print("Hiding Element " + " / ".join(elementrefs))
-                                                    if len(elementrefs) == 4:
-                                                        theme_data = config.THEME_DATA[elementrefs[0]][elementrefs[1]][elementrefs[2]][elementrefs[3]]
-                                                    if len(elementrefs) == 5:
-                                                        theme_data = config.THEME_DATA[elementrefs[0]][elementrefs[1]][elementrefs[2]][elementrefs[3]][elementrefs[4]]
-                                                    theme_data['SHOW'] =  False
-                                                # For now, hiding elements will not remove it from the display.
-                                                # It relies on anoth element to be enabble to replace it
-                                                # display.lcd.DisplayBitmap(get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)), theme_data['X'], theme_data['Y'], theme_data['RADIUS'], theme_data['RADIUS'])
-
-                                        else:
                                             if actiontype == "SUBMENU":
                                                 if str(actiondefs) in config.THEME_DATA['MENU']:
                                                     menu_data = config.THEME_DATA['MENU'][str(actiondefs)]
@@ -83,6 +56,51 @@ class ButtonHandler:
                                                         display_themed_value(menu_data[button]['TEXT'], value=menu_data[button]['MENULABEL'])
                                                 else:
                                                     logger.error("Cannot find menu " + str(actiondefs) + " in the theme configuration file") 
+
+                                            if actiontype == "BRIGHTNESS_DECREASE":
+                                                config.CONFIG_DATA["display"]["BRIGHTNESS"] = config.CONFIG_DATA["display"]["BRIGHTNESS"] - 10
+                                                if config.CONFIG_DATA["display"]["BRIGHTNESS"] < 10:
+                                                    config.CONFIG_DATA["display"]["BRIGHTNESS"] = 10
+                                                display.lcd.SetBrightness(config.CONFIG_DATA["display"]["BRIGHTNESS"])
+
+                                            if actiontype == "BRIGHTNESS_INCREASE":
+                                                config.CONFIG_DATA["display"]["BRIGHTNESS"] = config.CONFIG_DATA["display"]["BRIGHTNESS"] + 10
+                                                if config.CONFIG_DATA["display"]["BRIGHTNESS"] > 100:
+                                                    config.CONFIG_DATA["display"]["BRIGHTNESS"] = 100
+                                                display.lcd.SetBrightness(config.CONFIG_DATA["display"]["BRIGHTNESS"])
+
+                                        else:
+                                            for actiondef in actiondefs:
+
+                                                if actiontype == "MQTT":
+                                                    print("MQTT Publish " + actiondef['TOPIC'] + " - " +actiondef['PAYLOAD'])
+                                                    client.publish(actiondef['TOPIC'], actiondef['PAYLOAD'])
+
+                                                if actiontype =="SHOW_ELEMENT":
+                                                    elementrefs = actiondef['ELEMENT'].split(',')
+                                                    print("Showing Element " + " / ".join(elementrefs))
+                                                    if len(elementrefs) == 4:
+                                                        theme_data = config.THEME_DATA.get(elementrefs[0], {}).get(elementrefs[1], {}).get(elementrefs[2], {}).get(elementrefs[3], {})
+                                                    if len(elementrefs) == 5:
+                                                        theme_data = config.THEME_DATA.get(elementrefs[0], {}).get(elementrefs[1], {}).get(elementrefs[2], {}).get(elementrefs[3], {}).get(elementrefs[4], {})
+                                                    #if 'SHOW' in theme_data.get('SHOW') = True  
+                                                    theme_data.update({"SHOW": True})                        
+                                
+                                                if actiontype =="HIDE_ELEMENT":
+                                                    elementrefs = actiondef['ELEMENT'].split(',')
+                                                    print("Hiding Element " + " / ".join(elementrefs))
+                                                    if len(elementrefs) == 4:
+                                                        theme_data = config.THEME_DATA.get(elementrefs[0], {}).get(elementrefs[1], {}).get(elementrefs[2], {}).get(elementrefs[3], {})
+                                                    if len(elementrefs) == 5:
+                                                        theme_data = config.THEME_DATA.get(elementrefs[0], {}).get(elementrefs[1], {}).get(elementrefs[2], {}).get(elementrefs[3], {}).get(elementrefs[4], {})
+
+                                                    #theme_data['SHOW'] =  False
+                                                    theme_data.update({"SHOW": False})  
+                                                # For now, hiding elements will not remove it from the display.
+                                                # It relies on anoth element to be enabble to replace it
+                                                # display.lcd.DisplayBitmap(get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)), theme_data['X'], theme_data['Y'], theme_data['RADIUS'], theme_data['RADIUS'])
+
+
 
             else:
                 logger.error("Cannot find ROOT menu in the theme configuration file")
