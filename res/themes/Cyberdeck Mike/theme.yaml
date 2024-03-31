@@ -18,6 +18,40 @@ static_images:
     WIDTH: 480
     HEIGHT: 320
 
+API:
+  HOMEASSISTANT:
+    URL: "http://10.20.21.40:8123/api/"
+    HEADERS:
+      Authorization: "Bearer ygoygoygoygoyg"
+      content-type: "application/json"
+      
+
+HOTKEY:
+  HA:
+    ACTION:
+      MQTT:
+        - TOPIC: "zigbee2mqtt/Living Room STYRBAR/action"
+          PAYLOAD: "on"
+      REST_POST:
+        - API: HOMEASSISTANT
+          URL: "services/light/turn_on"
+          JSON_PAYLOAD: 
+            entity_id: light.living_room_light_filament_bulb_right
+            brightness: 244
+
+            
+  HS:
+    ACTION:
+      MQTT:
+        - TOPIC: "zigbee2mqtt/Living Room STYRBAR/action"
+          PAYLOAD: "off"         
+      REST_POST:
+        - API: HOMEASSISTANT
+          URL: "services/light/turn_off"
+          JSON_PAYLOAD: 
+            entity_id: light.living_room_light_filament_bulb_right
+       
+
 MENU:
   ROOT:
     B1:
