@@ -26,7 +26,9 @@ import math
 import os
 import platform
 import sys
+import json
 from typing import List
+from requests import get
 
 import babel.dates
 from psutil._common import bytes2human
@@ -721,6 +723,91 @@ class Date:
             theme_data=hour_theme_data,
             value=f"{babel.dates.format_time(date_now, format=time_format, locale=lc_time)}"
         )
+
+
+class API:
+    @classmethod
+    def stats(cls):
+        for sensordef in config.THEME_DATA['STATS'].get("API", {}).get("APISENSORS", {}):
+            # Create an interal counter in the config theme data struct if doesn't already exist
+            if "INTERVALCOUNTER" not in sensordef:
+                sensordef["INTERVALCOUNTER"] = sensordef.get("INTERVAL", 60)
+
+            # Check the counter to see if this API Sensor should be processes
+            if sensordef["INTERVALCOUNTER"] < sensordef.get("INTERVAL", 60):
+                print("Skipping " + str(sensordef.get("NAME", {})))
+                sensordef["INTERVALCOUNTER"] = sensordef["INTERVALCOUNTER"] + 1
+            else:
+                sensordef["INTERVALCOUNTER"] = 1 
+
+                if sensordef.get("ENABLED", True):
+                    print("Processing " + str(sensordef.get("NAME", {}))) 
+                    api = config.THEME_DATA.get("API", {}).get(sensordef.get("REST_GET", {}).get("API", {}), {})
+
+                    # Build the URL
+                    url = api.get("URL_PREFIX", {}) + sensordef.get("REST_GET", {}).get("URL_SUFFIX", {})
+
+                    # Process any URL substitutions
+                    for s in api.get("URL_Subsitutions", {}):
+                        url = url.replace(s.get("SEARCH", {}), s.get("REPLACE", {}))
+
+                    # Perform the GET
+                    headers = api.get("HEADERS", {})
+                    response = get(url, headers=headers)
+
+                    if (api.get("RESPONSE_TYPE", {})) == "json":
+                        data = json.loads(response.text)
+
+                    if (api.get("RESPONSE_TYPE", {})) == "xml":
+                        print("Not implemented")  
+                        data = {}
+
+                    # Process the response values 
+                    for valuedef in sensordef.get("VALUES", {}):
+                        value_path = valuedef.get("VALUE_PATH", {}).split(',')
+                        value = data
+                        
+                        for p in value_path:
+                            value = value.get(p, {})
+
+                        print("Value - " + str(value))
+
+                        # Display the data
+                        if "STATIC_TEXT" in valuedef:
+                            display.lcd.DisplayText(
+                                text=value,
+                                x=valuedef.get("STATIC_TEXT", {}).get("X", 0),
+                                y=valuedef.get("STATIC_TEXT", {}).get("Y", 0),
+                                font=valuedef.get("STATIC_TEXT", {}).get("FONT", "roboto-mono/RobotoMono-Regular.ttf"),
+                                font_size=valuedef.get("STATIC_TEXT", {}).get("FONT_SIZE", 10),
+                                font_color=valuedef.get("STATIC_TEXT", {}).get("FONT_COLOR", (0, 0, 0)),
+                                background_color=valuedef.get("STATIC_TEXT", {}).get("BACKGROUND_COLOR", (255, 255, 255)),
+                                background_image=get_theme_file_path(valuedef.get("STATIC_TEXT", {}).get("BACKGROUND_IMAGE", None)),
+                                anchor="lt")
+
+                        if "TEXT" in valuedef:
+                            display_themed_value(valuedef.get("TEXT", {}), value = value, unit = valuedef.get("UNIT", {}))
+
+                        if "LINE_GRAPH" in valuedef:
+                            # Create a history buffer in the config theme data struct if doesn't already exist
+                            if "HISTORY" not in valuedef:
+                                valuedef["HISTORY"] = []
+                            save_last_value(value, valuedef["HISTORY"], valuedef.get("LINE_GRAPH", {}).get("HISTORY_SIZE", 10))
+                            display_themed_line_graph(valuedef.get("LINE_GRAPH", {}),valuedef["HISTORY"])  
+
+                        if "GRAPH" in valuedef:
+                            display_themed_progress_bar(valuedef.get("GRAPH", {}), float(value))       
+                    
+                        if "RADIAL" in valuedef:
+                            display_themed_radial_bar(
+                                theme_data=valuedef.get("RADIAL", {}),
+                                value=int(float(value)),
+                                unit=valuedef.get("UNIT", {}),
+                                min_size=3
+                            )
+                           
+     
+
 
 
 class Custom:
