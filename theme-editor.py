@@ -114,6 +114,11 @@ def refresh_theme():
     stats.API.stats()
     stats.Custom.stats()
 
+    if "ROOT" in config.THEME_DATA['MENU']:   
+        menu_data = config.THEME_DATA['MENU']['ROOT']
+        for button in menu_data:
+            logger.info("Setting Up Button " + button + " - " + menu_data[button]['MENULABEL'])
+            stats.display_themed_value(menu_data[button]['TEXT'], value=menu_data[button]['MENULABEL'])
 
 if __name__ == "__main__":
     def on_closing():
