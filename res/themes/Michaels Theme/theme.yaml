@@ -25,7 +25,7 @@ API:
     URL_PREFIX: "http://10.20.21.40:8123/api/"
     RESPONSE_TYPE: json
     HEADERS:
-      Authorization: "Bearer ounoun"
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIyYjcxNGM3NjFjMTk0ZWJjYjNhN2FmNmNjMmZhYjk1ZiIsImlhdCI6MTcxMTYxMjQxMiwiZXhwIjoyMDI2OTcyNDEyfQ.16mOTTEWkKg-PCQ8CICigVZCYZ7UTQBdxCvA1MmmLVE"
       content-type: "application/json"
 
 
@@ -253,14 +253,14 @@ STATS:
         ANGLE_START: 100
         ANGLE_END: 260
         ANGLE_STEPS: 10
-        ANGLE_SEP: 5
+        ANGLE_SEP: 0
         CLOCKWISE: True
-        BAR_COLOR:  0, 250, 0
+        BAR_COLOR:  180, 180, 0
         SHOW_TEXT: True
         SHOW_UNIT: True
         FONT: roboto/Roboto-Bold.ttf
-        FONT_SIZE: 20
-        FONT_COLOR: 0, 250, 0
+        FONT_SIZE: 26
+        FONT_COLOR: 180, 180, 0
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
         CUSTOM_BBOX: [0, 0, 80, 160]
@@ -278,13 +278,13 @@ STATS:
         ANGLE_START: 190
         ANGLE_END: 350
         ANGLE_STEPS: 10
-        ANGLE_SEP: 5
+        ANGLE_SEP: 0
         CLOCKWISE: True
-        BAR_COLOR:  0, 250, 0
+        BAR_COLOR:  0, 100, 180
         SHOW_TEXT: True
         SHOW_UNIT: True
         FONT: roboto/Roboto-Bold.ttf
-        FONT_SIZE: 20
+        FONT_SIZE: 26
         FONT_COLOR: 0, 250, 0
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
@@ -292,7 +292,7 @@ STATS:
         TEXT_OFFSET: [-10, -20]
     FAN_SPEED:
       RADIAL:
-        SHOW: True
+        SHOW: False
         X: 173
         Y: 230
         RADIUS: 31
@@ -337,8 +337,8 @@ STATS:
         # BACKGROUND_COLOR: 0, 0, 0
       #  BACKGROUND_IMAGE: background.png
       RADIAL:
-        SHOW: True
-        X: 87
+        SHOW: False
+        X: 90
         Y: 240
         RADIUS: 39
         WIDTH: 15
@@ -371,13 +371,13 @@ STATS:
         ANGLE_START: 80
         ANGLE_END: 280
         ANGLE_STEPS: 10
-        ANGLE_SEP: 5
+        ANGLE_SEP: 0
         CLOCKWISE: False
         BAR_COLOR: 255, 0, 0
         SHOW_TEXT: True
         SHOW_UNIT: True
         FONT: roboto/Roboto-Bold.ttf
-        FONT_SIZE: 20
+        FONT_SIZE: 26
         FONT_COLOR: 255, 0, 0
         # BACKGROUND_COLOR: 0, 0, 0
         BACKGROUND_IMAGE: background.png
@@ -418,13 +418,13 @@ STATS:
         ANGLE_START: 170
         ANGLE_END: 10
         ANGLE_STEPS: 10
-        ANGLE_SEP: 5
+        ANGLE_SEP: 0
         CLOCKWISE: False
         BAR_COLOR:  255, 0, 0
         SHOW_TEXT: True
         SHOW_UNIT: True
         FONT: roboto/Roboto-Bold.ttf
-        FONT_SIZE: 20
+        FONT_SIZE: 26
         FONT_COLOR: 255, 0, 0
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
@@ -432,7 +432,7 @@ STATS:
         TEXT_OFFSET: [10, 20]
     FAN_SPEED:
       RADIAL:
-        SHOW: True
+        SHOW: False
         X: 430
         Y: 68
         RADIUS: 31
@@ -503,73 +503,6 @@ STATS:
   API:
     INTERVAL: 1
     APISENSORS:
-      - NAME: OpenWeatherMap
-        INTERVAL: 600
-        ENABLED: True
-        REST_GET:
-          API: OPENWEATHERMAP
-          URL_SUFFIX: "weather?q=Cardiff&appid={api_key}&units=metric"
-        VALUES: 
-         - VALUE_SEARCH: 
-              - SEARCH_PATH: main
-              - SEARCH_PATH: temp
-                TYPE: Merge  
-           UNIT: " c"
-           TEXT:
-             SHOW: True
-             SHOW_UNIT: True
-             X: 200
-             Y: 100
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png  
-         - VALUE_SEARCH: 
-              - SEARCH_PATH: weather
-              - SEARCH_PATH: description
-                TYPE: Merge    
-           UNIT: " c"
-           TEXT:
-             SHOW: True
-             SHOW_UNIT: True
-             X: 200
-             Y: 100
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png  
-         - VALUE_PATH: main,feels_like
-           UNIT: " c"
-           TEXT:
-             SHOW: True
-             SHOW_UNIT: True
-             X: 200
-             Y: 130
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png        
-         - VALUE_PATH: name 
-           STATIC_TEXT:
-             SHOW: False
-             SHOW_UNIT: False
-             X: 200
-             Y: 160
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png 
-         - VALUE_PATH: wind,speed 
-           UNIT: m/s
-           TEXT:
-             SHOW: True
-             SHOW_UNIT: True
-             X: 200
-             Y: 190
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png                               
       - NAME: HomeAssistantOilLevel
         INTERVAL: 10
         REST_GET:
@@ -577,21 +510,18 @@ STATS:
           URL_SUFFIX: "states/sensor.oil_remaining_volume"
         VALUES:
           - NAME: Oil Level
-            VALUE_SEARCH: 
-              - SEARCH_PATH: state
-                TYPE: Value 
+            VALUE_PATH: state
             UNIT: L  
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 200
+              X: 280
               Y: 10
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png  
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: state 
+          - VALUE_PATH: state 
             GRAPH:
               SHOW: True
               X: 349
@@ -610,22 +540,18 @@ STATS:
             URL_SUFFIX: "states/switch.living_room_office_switch"
         VALUES: 
           - NAME: Volage
-            VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
+            VALUE_PATH: attributes,voltage 
             UNIT: v
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 200
+              X: 280
               Y: 70
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
+          - VALUE_PATH: attributes,voltage 
             GRAPH:
               SHOW: True
               X: 349
@@ -637,16 +563,14 @@ STATS:
               BAR_COLOR: 255, 0, 0
               BAR_OUTLINE: False
               BACKGROUND_IMAGE: background.png 
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
+          - VALUE_PATH: attributes,voltage 
             UNIT: v
             RADIAL:
               SHOW: True
-              X: 387
+              X: 436
               Y: 250
-              RADIUS: 51
-              WIDTH: 25
+              RADIUS: 35
+              WIDTH: 5
               MIN_VALUE: 0
               MAX_VALUE: 250
               ANGLE_START: 110
@@ -661,26 +585,22 @@ STATS:
               FONT_SIZE: 16
               FONT_COLOR: 21, 176, 231
               BACKGROUND_IMAGE: background.png                
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power 
+          - VALUE_PATH: attributes,power 
             UNIT: W
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 200
+              X: 280
               Y: 40
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png 
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power 
+          - VALUE_PATH: attributes,power 
             LINE_GRAPH:
               SHOW: True
-              X: 10
-              Y: 220
+              X: 4
+              Y: 200
               WIDTH: 120
               HEIGHT: 80
               MIN_VALUE: 0
@@ -691,9 +611,7 @@ STATS:
               AXIS: True
               AXIS_COLOR: 255, 135, 0
               BACKGROUND_IMAGE: background.png
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power  
+          - VALUE_PATH: attributes,power  
             GRAPH:
               SHOW: True
               X: 349
@@ -701,7 +619,7 @@ STATS:
               WIDTH: 102
               HEIGHT: 9
               MIN_VALUE: 0
-              MAX_VALUE: 250
+              MAX_VALUE: 25
               BAR_COLOR: 255, 0, 0
               BAR_OUTLINE: False
               BACKGROUND_IMAGE: background.png 
