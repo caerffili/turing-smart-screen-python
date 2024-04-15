@@ -153,6 +153,11 @@ def DateStats():
     # logger.debug("Refresh date stats")
     stats.Date.stats()
 
+@async_job("API_Stats")
+@schedule(timedelta(seconds=config.THEME_DATA['STATS']['API'].get("INTERVAL", None)).total_seconds())
+def APIStats():
+    # logger.debug("Refresh date stats")
+    stats.API.stats()
 
 @async_job("Custom_Stats")
 @schedule(timedelta(seconds=config.THEME_DATA['STATS']['CUSTOM'].get("INTERVAL", None)).total_seconds())
