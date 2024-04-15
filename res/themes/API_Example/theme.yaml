@@ -81,14 +81,14 @@ API:
     URL_PREFIX: "http://10.20.21.40:8123/api/"
     RESPONSE_TYPE: json
     HEADERS:
-      Authorization: "Bearer ounoun"
+      Authorization: "Bearer xxxx"
       content-type: "application/json"
   OPENWEATHERMAP:
     URL_PREFIX: "http://api.openweathermap.org/data/2.5/"
     RESPONSE_TYPE: json
     URL_Subsitutions:
       - SEARCH: "{api_key}"
-        REPLACE: "ouounoun"
+        REPLACE: "xxxx"
 
 STATS:
   CPU:
@@ -311,10 +311,7 @@ STATS:
           API: OPENWEATHERMAP
           URL_SUFFIX: "weather?q=Cardiff&appid={api_key}&units=metric"
         VALUES: 
-         - VALUE_SEARCH: 
-              - SEARCH_PATH: main
-              - SEARCH_PATH: temp
-                TYPE: Merge  
+         - VALUE_PATH: main,temp
            UNIT: " c"
            TEXT:
              SHOW: True
@@ -325,20 +322,17 @@ STATS:
              FONT_SIZE: 18
              FONT_COLOR: 255, 255, 255
              BACKGROUND_IMAGE: background.png  
-         - VALUE_SEARCH: 
-              - SEARCH_PATH: weather
-              - SEARCH_PATH: description
-                TYPE: Merge    
-           UNIT: " c"
-           TEXT:
-             SHOW: True
-             SHOW_UNIT: True
-             X: 200
-             Y: 100
-             FONT: roboto/Roboto-Bold.ttf
-             FONT_SIZE: 18
-             FONT_COLOR: 255, 255, 255
-             BACKGROUND_IMAGE: background.png  
+        # - VALUE_PATH: weather,description
+        #   UNIT: " c"
+        #   TEXT:
+        #     SHOW: True
+        #     SHOW_UNIT: True
+        #     X: 200
+        #     Y: 100
+        #     FONT: roboto/Roboto-Bold.ttf
+        #     FONT_SIZE: 18
+        #     FONT_COLOR: 255, 255, 255
+        #     BACKGROUND_IMAGE: background.png  
          - VALUE_PATH: main,feels_like
            UNIT: " c"
            TEXT:
@@ -378,9 +372,7 @@ STATS:
           URL_SUFFIX: "states/sensor.oil_remaining_volume"
         VALUES:
           - NAME: Oil Level
-            VALUE_SEARCH: 
-              - SEARCH_PATH: state
-                TYPE: Value 
+            VALUE_PATH: state
             UNIT: L  
             TEXT:
               SHOW: True
@@ -391,8 +383,7 @@ STATS:
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png  
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: state 
+          - VALUE_PATH: state 
             GRAPH:
               SHOW: True
               X: 349
@@ -411,9 +402,7 @@ STATS:
             URL_SUFFIX: "states/switch.living_room_office_switch"
         VALUES: 
           - NAME: Volage
-            VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
+            VALUE_PATH: attributes,voltage 
             UNIT: v
             TEXT:
               SHOW: True
@@ -424,9 +413,6 @@ STATS:
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
             GRAPH:
               SHOW: True
               X: 349
@@ -438,10 +424,6 @@ STATS:
               BAR_COLOR: 255, 0, 0
               BAR_OUTLINE: False
               BACKGROUND_IMAGE: background.png 
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: voltage 
-            UNIT: v
             RADIAL:
               SHOW: True
               X: 387
@@ -462,9 +444,7 @@ STATS:
               FONT_SIZE: 16
               FONT_COLOR: 21, 176, 231
               BACKGROUND_IMAGE: background.png                
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power 
+          - VALUE_PATH: attributes,power 
             UNIT: W
             TEXT:
               SHOW: True
@@ -475,9 +455,6 @@ STATS:
               FONT_SIZE: 18
               FONT_COLOR: 255, 255, 255
               BACKGROUND_IMAGE: background.png 
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power 
             LINE_GRAPH:
               SHOW: True
               X: 10
@@ -492,9 +469,6 @@ STATS:
               AXIS: True
               AXIS_COLOR: 255, 135, 0
               BACKGROUND_IMAGE: background.png
-          - VALUE_SEARCH: 
-              - SEARCH_PATH: attributes    
-              - SEARCH_PATH: power  
             GRAPH:
               SHOW: True
               X: 349

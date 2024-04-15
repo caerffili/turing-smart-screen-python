@@ -768,11 +768,11 @@ class API:
                     for valuedef in sensordef.get("VALUES", {}):
                         value_path = valuedef.get("VALUE_PATH", {}).split(',')
                         value = data
-                        
+                        #print(value)
                         for p in value_path:
                             value = value.get(p, {})
 
-                        print("Value - " + str(value))
+                        #print("Value - " + str(value))
 
                         # Display the data
                         if "STATIC_TEXT" in valuedef:
@@ -788,7 +788,7 @@ class API:
                                 anchor="lt")
 
                         if "TEXT" in valuedef:
-                            display_themed_value(valuedef.get("TEXT", {}), value = value, unit = valuedef.get("UNIT", {}))
+                            display_themed_value(valuedef.get("TEXT", {}), value = value, unit = valuedef.get("UNIT", ""))
 
                         if "LINE_GRAPH" in valuedef:
                             # Create a history buffer in the config theme data struct if doesn't already exist
