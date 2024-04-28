@@ -21,6 +21,9 @@
 
 import math
 import platform
+from library.sensors.sensors_librehardwaremonitor import Hardware 
+from library.sensors.sensors_librehardwaremonitor import handle 
+from library.sensors.sensors_librehardwaremonitor import get_hw_and_update
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -96,3 +99,27 @@ class ExampleCustomTextOnlyData(CustomDataSource):
     def last_values(self) -> List[float]:
         # If a custom data class only has text values, it won't be possible to display line graph
         pass
+
+
+class PSUPower(CustomDataSource):
+    last_val = [math.nan] * 10
+
+    def as_numeric(self) -> float:
+        psu = get_hw_and_update(Hardware.HardwareType.Psu)
+        for sensor in psu.Sensors:
+            if sensor.SensorType == Hardware.SensorType.Power:
+                self.last_val.append(sensor.Value)
+                # Also remove the oldest value from history list
+                self.last_val.pop(0)
+                self.value = float(sensor.Value)
+
+        return self.value
+
+    def as_string(self) -> str:
+        # If a custom data class only has text values, it won't be possible to display graph or radial bars
+        return f'{self.as_numeric():>5.1f}W'
+
+    def last_values(self) -> List[float]:
+        # If a custom data class only has text values, it won't be possible to display line graph
+        return self.last_val
+

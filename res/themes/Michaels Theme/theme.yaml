@@ -64,7 +64,7 @@ MENU:
       ACTION:
         SUBMENU: LeftMenu
       TEXT: 
-        SHOW: True
+        SHOW: False
         X: 80 
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
@@ -76,7 +76,7 @@ MENU:
       ACTION:
         SUBMENU: MiddleMenu
       TEXT:
-        SHOW: True
+        SHOW: False
         X: 204
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
@@ -88,7 +88,7 @@ MENU:
       ACTION:
         SUBMENU: RightMenu
       TEXT:
-        SHOW: True
+        SHOW: False
         X: 300
         Y: 292
         FONT: roboto-mono/RobotoMono-Bold.ttf
@@ -244,52 +244,58 @@ STATS:
       INTERVAL: 1
       RADIAL:
         SHOW: True
-        X: 120
-        Y: 100
-        RADIUS: 80
-        WIDTH: 15
+        X: 75
+        Y: 75
+        RADIUS: 70
+        WIDTH: 20
         MIN_VALUE: 0
         MAX_VALUE: 100
-        ANGLE_START: 100
-        ANGLE_END: 260
+        ANGLE_START: 270
+        ANGLE_END: 270
         ANGLE_STEPS: 10
         ANGLE_SEP: 0
         CLOCKWISE: True
-        BAR_COLOR:  180, 180, 0
+        BAR_COLOR:  0, 200, 30
+        BAR_BACKGROUND_COLOR:  60, 60, 60 
+        DRAW_BAR_BACKGROUND: True
+        BAR_DECORATION: Ellipse        
         SHOW_TEXT: True
         SHOW_UNIT: True
-        FONT: roboto/Roboto-Bold.ttf
-        FONT_SIZE: 26
-        FONT_COLOR: 180, 180, 0
+        FONT: roboto/Roboto-Medium.ttf
+        FONT_SIZE: 30
+        FONT_COLOR: 180, 180, 180
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
-        CUSTOM_BBOX: [0, 0, 80, 160]
-        TEXT_OFFSET: [-30, 0]
+        CUSTOM_BBOX: [0, 0, 140, 140]
+        TEXT_OFFSET: [0, 0]
     TEMPERATURE:
       INTERVAL: 5
       RADIAL:
         SHOW: True
-        X: 300
-        Y: 180
-        RADIUS: 80
-        WIDTH: 15
+        X: 75
+        Y: 240
+        RADIUS: 70
+        WIDTH: 20
         MIN_VALUE: 0
         MAX_VALUE: 100
-        ANGLE_START: 190
-        ANGLE_END: 350
+        ANGLE_START: 270
+        ANGLE_END: 270
         ANGLE_STEPS: 10
         ANGLE_SEP: 0
         CLOCKWISE: True
-        BAR_COLOR:  0, 100, 180
+        BAR_COLOR:  0, 200, 30
+        BAR_BACKGROUND_COLOR:  60, 60, 60 
+        DRAW_BAR_BACKGROUND: True
+        BAR_DECORATION: Ellipse     
         SHOW_TEXT: True
         SHOW_UNIT: True
-        FONT: roboto/Roboto-Bold.ttf
+        FONT: roboto/Roboto-Medium.ttf
         FONT_SIZE: 26
-        FONT_COLOR: 0, 250, 0
+        FONT_COLOR: 180, 190, 180
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
-        CUSTOM_BBOX: [0, 0, 160, 80]
-        TEXT_OFFSET: [-10, -20]
+        CUSTOM_BBOX: [0, 0, 140, 140]
+        TEXT_OFFSET: [0, 0]
     FAN_SPEED:
       RADIAL:
         SHOW: False
@@ -362,27 +368,30 @@ STATS:
     PERCENTAGE:
       RADIAL:
         SHOW: True
-        X: 120
-        Y: 100
-        RADIUS: 80
-        WIDTH: 15
+        X: 240
+        Y: 80
+        RADIUS: 70
+        WIDTH: 20
         MIN_VALUE: 0
         MAX_VALUE: 100
-        ANGLE_START: 80
-        ANGLE_END: 280
+        ANGLE_START: 270
+        ANGLE_END: 270
         ANGLE_STEPS: 10
         ANGLE_SEP: 0
-        CLOCKWISE: False
-        BAR_COLOR: 255, 0, 0
+        CLOCKWISE: True
+        BAR_COLOR: 0, 160, 230
+        BAR_BACKGROUND_COLOR: 60, 60, 60
+        DRAW_BAR_BACKGROUND: True
+        BAR_DECORATION: Ellipse             
         SHOW_TEXT: True
         SHOW_UNIT: True
-        FONT: roboto/Roboto-Bold.ttf
+        FONT: roboto/Roboto-Medium.ttf
         FONT_SIZE: 26
-        FONT_COLOR: 255, 0, 0
+        FONT_COLOR: 200, 200, 200
         # BACKGROUND_COLOR: 0, 0, 0
         BACKGROUND_IMAGE: background.png
-        CUSTOM_BBOX: [80, 0, 160, 160]
-        TEXT_OFFSET: [30, 0]
+        CUSTOM_BBOX: [0, 0, 140, 140]
+        TEXT_OFFSET: [0, 0]
     MEMORY_PERCENT:
       GRAPH:
         SHOW: False
@@ -409,27 +418,30 @@ STATS:
     TEMPERATURE:
       RADIAL:
         SHOW: True
-        X: 300
-        Y: 180
-        RADIUS: 80
-        WIDTH: 15
+        X: 240
+        Y: 240
+        RADIUS: 70
+        WIDTH: 20
         MIN_VALUE: 0
         MAX_VALUE: 100
-        ANGLE_START: 170
-        ANGLE_END: 10
+        ANGLE_START: 270
+        ANGLE_END: 270
         ANGLE_STEPS: 10
         ANGLE_SEP: 0
-        CLOCKWISE: False
-        BAR_COLOR:  255, 0, 0
+        CLOCKWISE: True
+        BAR_COLOR: 0, 160, 230
+        BAR_BACKGROUND_COLOR: 60, 60, 60 
+        DRAW_BAR_BACKGROUND: True
+        BAR_DECORATION: Ellipse     
         SHOW_TEXT: True
         SHOW_UNIT: True
-        FONT: roboto/Roboto-Bold.ttf
+        FONT: roboto/Roboto-Medium.ttf
         FONT_SIZE: 26
-        FONT_COLOR: 255, 0, 0
+        FONT_COLOR: 200, 200, 200
         #BACKGROUND_COLOR: 200, 200, 200
         BACKGROUND_IMAGE: background.png
-        CUSTOM_BBOX: [0, 80, 160, 160]
-        TEXT_OFFSET: [10, 20]
+        CUSTOM_BBOX: [0, 0, 140, 140]
+        TEXT_OFFSET: [0, 0]
     FAN_SPEED:
       RADIAL:
         SHOW: False
@@ -515,7 +527,7 @@ STATS:
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 280
+              X: 400
               Y: 10
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
@@ -523,7 +535,7 @@ STATS:
               BACKGROUND_IMAGE: background.png  
           - VALUE_PATH: state 
             GRAPH:
-              SHOW: True
+              SHOW: False
               X: 349
               Y: 10
               WIDTH: 102
@@ -545,7 +557,7 @@ STATS:
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 280
+              X: 400
               Y: 70
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
@@ -553,7 +565,7 @@ STATS:
               BACKGROUND_IMAGE: background.png
           - VALUE_PATH: attributes,voltage 
             GRAPH:
-              SHOW: True
+              SHOW: False
               X: 349
               Y: 70
               WIDTH: 102
@@ -566,7 +578,7 @@ STATS:
           - VALUE_PATH: attributes,voltage 
             UNIT: v
             RADIAL:
-              SHOW: True
+              SHOW: False
               X: 436
               Y: 250
               RADIUS: 35
@@ -590,7 +602,7 @@ STATS:
             TEXT:
               SHOW: True
               SHOW_UNIT: True
-              X: 280
+              X: 400
               Y: 40
               FONT: roboto/Roboto-Bold.ttf
               FONT_SIZE: 18
@@ -598,7 +610,7 @@ STATS:
               BACKGROUND_IMAGE: background.png 
           - VALUE_PATH: attributes,power 
             LINE_GRAPH:
-              SHOW: True
+              SHOW: False
               X: 4
               Y: 200
               WIDTH: 120
@@ -613,7 +625,7 @@ STATS:
               BACKGROUND_IMAGE: background.png
           - VALUE_PATH: attributes,power  
             GRAPH:
-              SHOW: True
+              SHOW: False
               X: 349
               Y: 40
               WIDTH: 102
@@ -625,6 +637,38 @@ STATS:
               BACKGROUND_IMAGE: background.png 
 
 
- 
+
+  CUSTOM:
+    # For now the refresh interval (in seconds) is the same for all custom data classes
+    INTERVAL: 3
+    # The name of the class must be an exact match to the class name in sensors_custom.py
+    PSUPower:
+      # There are 4 ways of displaying a custom sensor containing numeric values: as text, as bar graph (progress bar), as radial progress bar, as line graph
+      RADIAL:
+        SHOW: True
+        X: 400
+        Y: 240
+        RADIUS: 70
+        WIDTH: 20
+        MIN_VALUE: 0
+        MAX_VALUE: 300
+        ANGLE_START: 270
+        ANGLE_END: 270
+        ANGLE_STEPS: 10
+        ANGLE_SEP: 0
+        CLOCKWISE: True
+        BAR_COLOR:  200, 0, 30
+        BAR_BACKGROUND_COLOR:  60, 60, 60 
+        DRAW_BAR_BACKGROUND: True
+        BAR_DECORATION: Ellipse        
+        SHOW_TEXT: True
+        SHOW_UNIT: True
+        FONT: roboto/Roboto-Medium.ttf
+        FONT_SIZE: 30
+        FONT_COLOR: 180, 180, 180
+        #BACKGROUND_COLOR: 200, 200, 200
+        BACKGROUND_IMAGE: background.png
+        CUSTOM_BBOX: [0, 0, 140, 140]
+        TEXT_OFFSET: [0, 0]
 
 
