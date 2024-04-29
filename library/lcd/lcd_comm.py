@@ -483,7 +483,6 @@ class LcdComm(ABC):
                                  bar_color: Tuple[int, int, int] = (0, 0, 0),
                                  background_color: Tuple[int, int, int] = (255, 255, 255),
                                  background_image: str = None,
-                                 old_image: Image = None,
                                  custom_bbox: Tuple[int, int, int, int] = (0, 0, 0, 0),
                                  text_offset: Tuple[int, int] = (0,0),
                                  bar_background_color: Tuple[int, int, int] = (0, 0, 0),
@@ -663,15 +662,15 @@ class LcdComm(ABC):
             draw.text((radius - w / 2 + text_offset[0], radius - top - h / 2 + text_offset[1]), text,
                       font=font, fill=font_color)
 
-        if old_image != None:
+        if custom_bbox[0] != 0 or custom_bbox[1] != 0 or custom_bbox[2] != 0 or custom_bbox[3] != 0:
+            bar_image = bar_image.crop(box=custom_bbox)
+        
+        if old_image != None:   
             diff = ImageChops.difference(bar_image.convert('RGB'), old_image.convert('RGB'))
             if diff.getbbox() != None:
-                self.DisplayPILImage(bar_image.crop(diff.getbbox()), xc - radius + diff.getbbox()[0], yc - radius + diff.getbbox()[1])
+                self.DisplayPILImage(bar_image.crop(diff.getbbox()), xc - radius + custom_bbox[0] + diff.getbbox()[0], yc - radius + custom_bbox[1] + diff.getbbox()[1])
         else:
-            if custom_bbox[0] != 0 or custom_bbox[1] != 0 or custom_bbox[2] != 0 or custom_bbox[3] != 0:
-            bar_image = bar_image.crop(box=custom_bbox)
-
-        self.DisplayPILImage(bar_image, xc - radius + custom_bbox[0], yc - radius + custom_bbox[1])
+            self.DisplayPILImage(bar_image, xc - radius + custom_bbox[0], yc - radius + custom_bbox[1])
        # self.DisplayPILImage(bar_image, xc - radius, yc - radius)
 
         return bar_image

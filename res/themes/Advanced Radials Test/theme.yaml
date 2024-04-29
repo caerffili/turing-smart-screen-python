@@ -301,6 +301,5 @@ STATS:
           FONT_COLOR: 255, 255, 255
           # BACKGROUND_COLOR: 132, 154, 165
           BACKGROUND_IMAGE: background.png
- 
-
-
+  API:
+    INTERVAL: 1
