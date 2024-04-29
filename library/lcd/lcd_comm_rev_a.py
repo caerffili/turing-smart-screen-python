@@ -213,6 +213,8 @@ class LcdCommRevA(LcdComm):
         if not image_width:
             image_width = image.size[0]
 
+        print("Drawing " + str(image_width) + " by " + str(image_height) + ". Total " + str(image_width * image_height))
+
         assert x <= width, 'Image X coordinate must be <= display width'
         assert y <= height, 'Image Y coordinate must be <= display height'
         assert image_height > 0, 'Image height must be > 0'
