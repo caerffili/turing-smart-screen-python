@@ -96,7 +96,7 @@ def display_themed_value(theme_data, value, min_size=0, unit=''):
     if theme_data.get("SHOW_UNIT", True) and unit:
         text += str(unit)
 
-    display.lcd.DisplayText(
+    theme_data["OLD_IMAGE"] = display.lcd.DisplayText(
         text=text,
         x=theme_data.get("X", 0),
         y=theme_data.get("Y", 0),
@@ -105,7 +105,8 @@ def display_themed_value(theme_data, value, min_size=0, unit=''):
         font_color=theme_data.get("FONT_COLOR", (0, 0, 0)),
         background_color=theme_data.get("BACKGROUND_COLOR", (255, 255, 255)),
         background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)),
-        anchor="lt"
+        anchor="lt",
+        old_image=theme_data.get("OLD_IMAGE",None)
     )
 
 
@@ -131,7 +132,7 @@ def display_themed_progress_bar(theme_data, value):
     if not theme_data.get("SHOW", False):
         return
 
-    display.lcd.DisplayProgressBar(
+    theme_data["OLD_IMAGE"] = display.lcd.DisplayProgressBar(
         x=theme_data.get("X", 0),
         y=theme_data.get("Y", 0),
         width=theme_data.get("WIDTH", 0),
@@ -142,7 +143,8 @@ def display_themed_progress_bar(theme_data, value):
         bar_color=theme_data.get("BAR_COLOR", (0, 0, 0)),
         bar_outline=theme_data.get("BAR_OUTLINE", False),
         background_color=theme_data.get("BACKGROUND_COLOR", (255, 255, 255)),
-        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None))
+        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)),
+        old_image=theme_data.get("OLD_IMAGE",None)
     )
 
 
@@ -160,7 +162,7 @@ def display_themed_radial_bar(theme_data, value, min_size=0, unit='', custom_tex
     else:
         text = ""
 
-    display.lcd.DisplayRadialProgressBar(
+    theme_data["OLD_IMAGE"] = display.lcd.DisplayRadialProgressBar(
         xc=theme_data.get("X", 0),
         yc=theme_data.get("Y", 0),
         radius=theme_data.get("RADIUS", 1),
@@ -179,12 +181,13 @@ def display_themed_radial_bar(theme_data, value, min_size=0, unit='', custom_tex
         font_size=theme_data.get("FONT_SIZE", 10),
         font_color=theme_data.get("FONT_COLOR", (0, 0, 0)),
         background_color=theme_data.get("BACKGROUND_COLOR", (0, 0, 0)),
-        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)),
         custom_bbox=theme_data.get("CUSTOM_BBOX", (0, 0, 0, 0)),
         text_offset=theme_data.get("TEXT_OFFSET", (0, 0)),
         bar_background_color = theme_data.get("BAR_BACKGROUND_COLOR", (0, 0, 0)),
         draw_bar_background = theme_data.get("DRAW_BAR_BACKGROUND", False),
-        bar_decoration = theme_data.get("BAR_DECORATION", "")
+        bar_decoration = theme_data.get("BAR_DECORATION", ""),
+        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)),
+        old_image=theme_data.get("OLD_IMAGE",None),
     )
 
 
@@ -212,7 +215,7 @@ def display_themed_line_graph(theme_data, values):
 
     line_color = theme_data.get("LINE_COLOR", (0, 0, 0))
 
-    display.lcd.DisplayLineGraph(
+    theme_data["OLD_IMAGE"] = display.lcd.DisplayLineGraph(
         x=theme_data.get("X", 0),
         y=theme_data.get("Y", 0),
         width=theme_data.get("WIDTH", 1),
@@ -225,7 +228,8 @@ def display_themed_line_graph(theme_data, values):
         graph_axis=theme_data.get("AXIS", False),
         axis_color=theme_data.get("AXIS_COLOR", line_color),  # If no color specified, use line color for axis
         background_color=theme_data.get("BACKGROUND_COLOR", (0, 0, 0)),
-        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None))
+        background_image=get_theme_file_path(theme_data.get("BACKGROUND_IMAGE", None)),
+        old_image=theme_data.get("OLD_IMAGE",None)
     )
 
 

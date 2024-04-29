@@ -28,7 +28,7 @@ from enum import IntEnum
 from typing import Tuple, List
 
 import serial
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageChops
 
 from library.log import logger
 
@@ -216,6 +216,7 @@ class LcdComm(ABC):
             background_image: str = None,
             align: str = 'left',
             anchor: str = None,
+            old_image: Image = None
     ):
         # Convert text to bitmap using PIL and display it
         # Provide the background image path to display text with transparent background
@@ -268,14 +269,22 @@ class LcdComm(ABC):
         # Crop text bitmap to keep only the text
         text_image = text_image.crop(box=(left, top, right, bottom))
 
-        self.DisplayPILImage(text_image, left, top)
+        if old_image != None:
+            diff = ImageChops.difference(text_image.convert('RGB'), old_image.convert('RGB'))
+            if diff.getbbox() != None:
+                self.DisplayPILImage(text_image.crop(diff.getbbox()), left + diff.getbbox()[0], top + diff.getbbox()[1])
+        else:
+            self.DisplayPILImage(text_image, left, top)
+
+        return text_image
 
     def DisplayProgressBar(self, x: int, y: int, width: int, height: int, min_value: int = 0, max_value: int = 100,
                            value: int = 50,
                            bar_color: Tuple[int, int, int] = (0, 0, 0),
                            bar_outline: bool = True,
                            background_color: Tuple[int, int, int] = (255, 255, 255),
-                           background_image: str = None):
+                           background_image: str = None,
+                           old_image: Image = None):
         # Generate a progress bar and display it
         # Provide the background image path to display progress bar with transparent background
 
@@ -319,7 +328,14 @@ class LcdComm(ABC):
             # Draw outline
             draw.rectangle([0, 0, width - 1, height - 1], fill=None, outline=bar_color)
 
-        self.DisplayPILImage(bar_image, x, y)
+        if old_image != None:
+            diff = ImageChops.difference(bar_image.convert('RGB'), old_image.convert('RGB'))
+            if diff.getbbox() != None:
+                self.DisplayPILImage(bar_image.crop(diff.getbbox()), x + diff.getbbox()[0], y + diff.getbbox()[1])
+        else:
+            self.DisplayPILImage(bar_image, x, y)
+
+        return bar_image
 
     def DisplayLineGraph(self, x: int, y: int, width: int, height: int,
                          values: List[float],
@@ -330,7 +346,8 @@ class LcdComm(ABC):
                          graph_axis: bool = True,
                          axis_color: Tuple[int, int, int] = (0, 0, 0),
                          background_color: Tuple[int, int, int] = (255, 255, 255),
-                         background_image: str = None):
+                         background_image: str = None,
+                         old_image: Image = None):
         # Generate a plot graph and display it
         # Provide the background image path to display plot graph with transparent background
 
@@ -418,8 +435,15 @@ class LcdComm(ABC):
             draw.text((width - 1 - right, height - 2 - bottom), text,
                       font=font, fill=axis_color)
 
-        self.DisplayPILImage(graph_image, x, y)
-
+        if old_image != None:
+            diff = ImageChops.difference(graph_image.convert('RGB'), old_image.convert('RGB'))
+            if diff.getbbox() != None:
+                self.DisplayPILImage(graph_image.crop(diff.getbbox()), x + diff.getbbox()[0], y + diff.getbbox()[1])
+        else:
+            self.DisplayPILImage(graph_image, x, y)
+    
+        return graph_image
+    
     def DrawRadialDecoration(self, draw: ImageDraw, angle: float, radius: float, width: float, color: Tuple[int, int, int] = (0, 0, 0)):
         i_cos = math.cos(angle*math.pi/180)
         i_sin = math.sin(angle*math.pi/180)
@@ -442,7 +466,6 @@ class LcdComm(ABC):
             y_f = math.floor(y_f + 0.5)            
         draw.ellipse([x_f - width/2, y_f - width/2, x_f + width/2, y_f - 1 + width/2 - 1], outline=color, fill=color, width=1)   
       
-
     def DisplayRadialProgressBar(self, xc: int, yc: int, radius: int, bar_width: int,
                                  min_value: int = 0,
                                  max_value: int = 100,
@@ -460,11 +483,13 @@ class LcdComm(ABC):
                                  bar_color: Tuple[int, int, int] = (0, 0, 0),
                                  background_color: Tuple[int, int, int] = (255, 255, 255),
                                  background_image: str = None,
+                                 old_image: Image = None,
                                  custom_bbox: Tuple[int, int, int, int] = (0, 0, 0, 0),
                                  text_offset: Tuple[int, int] = (0,0),
                                  bar_background_color: Tuple[int, int, int] = (0, 0, 0),
                                  draw_bar_background: bool = False,
-                                 bar_decoration: str = ""):                                 
+                                 bar_decoration: str = "",
+                                 old_image: Image = None):                                 
         # Generate a radial progress bar and display it
         # Provide the background image path to display progress bar with transparent background
 
@@ -638,11 +663,18 @@ class LcdComm(ABC):
             draw.text((radius - w / 2 + text_offset[0], radius - top - h / 2 + text_offset[1]), text,
                       font=font, fill=font_color)
 
-        if custom_bbox[0] != 0 or custom_bbox[1] != 0 or custom_bbox[2] != 0 or custom_bbox[3] != 0:
+        if old_image != None:
+            diff = ImageChops.difference(bar_image.convert('RGB'), old_image.convert('RGB'))
+            if diff.getbbox() != None:
+                self.DisplayPILImage(bar_image.crop(diff.getbbox()), xc - radius + diff.getbbox()[0], yc - radius + diff.getbbox()[1])
+        else:
+            if custom_bbox[0] != 0 or custom_bbox[1] != 0 or custom_bbox[2] != 0 or custom_bbox[3] != 0:
             bar_image = bar_image.crop(box=custom_bbox)
 
         self.DisplayPILImage(bar_image, xc - radius + custom_bbox[0], yc - radius + custom_bbox[1])
        # self.DisplayPILImage(bar_image, xc - radius, yc - radius)
+
+        return bar_image
 
     # Load image from the filesystem, or get from the cache if it has already been loaded previously
     def open_image(self, bitmap_path: str) -> Image:
