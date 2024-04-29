@@ -274,7 +274,7 @@ class LcdComm(ABC):
             if diff.getbbox() != None:
                 self.DisplayPILImage(text_image.crop(diff.getbbox()), left + diff.getbbox()[0], top + diff.getbbox()[1])
         else:
-            self.DisplayPILImage(text_image, x, y)
+            self.DisplayPILImage(text_image, left, top)
 
         return text_image
 
